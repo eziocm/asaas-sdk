@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-02-09
+
+### Added
+
+#### New Modules (3)
+
+- **Chargebacks** - List and contest chargebacks
+- **Credit Bureau** - Consult credit reports (Serasa)
+- **Negative List** - Customer negative list management (Dunning)
+
+### Fixed
+
+- Improved type safety across all modules
+- Fixed minor documentation issues
+
 ## [2.1.1] - 2026-02-08
 
 ### Fixed
@@ -118,41 +133,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
-- **2.1.0** - Added Payment Links, Checkout, Invoice, and Split modules
+- **2.2.0** - Added Chargebacks, Credit Bureau, Negative List
+- **2.1.0** - Added Payment Links, Checkout, Invoice, Split
 - **2.0.0** - Major feature release with 8 new modules
 - **1.0.0** - Initial release with core functionality
 
 ## Upgrade Guide
 
-### From 2.0.x to 2.1.x
+### From 2.1.x to 2.2.x
 
 #### New Features Available
 
 You can now use these new modules:
 
 ```typescript
-// Payment Links
-await asaas.paymentLinks.create({...});
+// Chargeback Management
+await asaas.chargebacks.list({...});
 
-// Invoices
-await asaas.invoices.create({...});
+// Credit Bureau (Serasa)
+await asaas.creditBureau.create({...});
 
-// Checkout Customization
-await asaas.checkout.create({...});
-
-// Splits (Wallet)
-await asaas.splits.create({...});
+// Negative List (Dunning)
+await asaas.negativeList.create({...});
 ```
 
 ---
 
 ## Future Roadmap
-
-### Planned for 2.2.0
-
-- Chargeback management
-- Credit bureau integration
-- Payment dunning
 
 ### Planned for 3.0.0
 

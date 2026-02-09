@@ -81,6 +81,10 @@ console.log('PIX Payload:', qrCode.payload);
 | **checkout** | Checkout config | customization, settings |
 | **splits** | Payment distribution | create, list, get |
 
+| **chargebacks** | Chargeback reports | list, get |
+| **creditBureau** | Serasa/SPC query | create, list, get |
+| **negativeList** | Dunning/Negativação | create, delete, list, get |
+
 ### Advanced Modules
 
 | Module | Description | Methods |

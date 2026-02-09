@@ -20,6 +20,9 @@ import { PaymentLinkClient } from './clients/payment-link.client';
 import { InvoiceClient } from './clients/invoice.client';
 import { CheckoutClient } from './clients/checkout.client';
 import { SplitClient } from './clients/split.client';
+import { ChargebackClient } from './clients/chargeback.client';
+import { CreditBureauClient } from './clients/credit-bureau.client';
+import { NegativeListClient } from './clients/negative-list.client';
 import { AsaasConfig } from './types';
 
 export class AsaasSDK {
@@ -42,6 +45,9 @@ export class AsaasSDK {
     public readonly invoices: InvoiceClient;
     public readonly checkout: CheckoutClient;
     public readonly splits: SplitClient;
+    public readonly chargebacks: ChargebackClient;
+    public readonly creditBureau: CreditBureauClient;
+    public readonly negativeList: NegativeListClient;
 
     constructor(config: AsaasConfig) {
         this.http = new AsaasHttpClient(config);
@@ -64,6 +70,9 @@ export class AsaasSDK {
         this.invoices = new InvoiceClient(this.http);
         this.checkout = new CheckoutClient(this.http);
         this.splits = new SplitClient(this.http);
+        this.chargebacks = new ChargebackClient(this.http);
+        this.creditBureau = new CreditBureauClient(this.http);
+        this.negativeList = new NegativeListClient(this.http);
     }
 
     /**
@@ -94,3 +103,6 @@ export { PaymentLinkClient } from './clients/payment-link.client';
 export { InvoiceClient } from './clients/invoice.client';
 export { CheckoutClient } from './clients/checkout.client';
 export { SplitClient } from './clients/split.client';
+export { ChargebackClient } from './clients/chargeback.client';
+export { CreditBureauClient } from './clients/credit-bureau.client';
+export { NegativeListClient } from './clients/negative-list.client';
