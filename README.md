@@ -463,6 +463,8 @@ async function getAllCustomers() {
 
 ## 🔗 Links
 
+- [**API Reference**](./docs/API.md) - Detailed API documentation
+- [**Architecture**](./docs/ARCHITECTURE.md) - System design and flows
 - [Asaas Official Documentation](https://docs.asaas.com/reference)
 - [GitHub Repository](https://github.com/eziocm/asaas-sdk)
 - [NPM Package](https://www.npmjs.com/package/@eziocm/asaas-sdk)

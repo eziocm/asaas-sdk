@@ -69,7 +69,7 @@ export class AsaasHttpClient {
                             description: response.statusText,
                         },
                     ],
-                }));
+                })) as AsaasError;
 
                 throw new AsaasApiError(
                     `Asaas API Error: ${response.status} ${response.statusText}`,
@@ -78,7 +78,7 @@ export class AsaasHttpClient {
                 );
             }
 
-            return response.json();
+            return response.json() as Promise<T>;
         } catch (error) {
             if (error instanceof AsaasApiError) {
                 throw error;
