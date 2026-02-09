@@ -3,7 +3,7 @@
 ## 📦 Package Information
 
 **Name**: `@eziocm/asaas-sdk`  
-**Version**: 2.1.0  
+**Version**: 2.1.1  
 **Description**: TypeScript SDK for Asaas Payment Gateway API v3  
 **Author**: Ezio Caetano Morais <eziocm@gmail.com>  
 **License**: MIT  
@@ -82,7 +82,7 @@ packages/asaas-sdk/
 
 #### Financial Modules (9)
 
-6. **Installments** - Payment plan management
+1. **Installments** - Payment plan management
 2. **Transfers** - Bank and PIX transfers
 3. **Refunds** - Payment reversal operations
 4. **Anticipations** - Cash flow management
@@ -94,7 +94,7 @@ packages/asaas-sdk/
 
 #### Advanced Modules (3)
 
-15. **Subaccounts** - Multi-tenant support
+1. **Subaccounts** - Multi-tenant support
 2. **CreditCard** - Card tokenization for security
 3. **Notifications** - Notification settings management
 
@@ -107,7 +107,12 @@ packages/asaas-sdk/
 
 ## 🔄 Version History
 
-### v2.1.0 (Current)
+### v2.1.1 (Current)
+
+- Fix npm publication conflict
+- Ensure all modules published
+
+### v2.1.0
 
 - Added Payment Links module
 - Added Checkout module
