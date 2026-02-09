@@ -4,7 +4,7 @@
  * This file demonstrates how to use the SDK in a real application
  */
 
-import { AsaasSDK } from '@watranscript/asaas-sdk';
+import { AsaasSDK } from '@eziocm/asaas-sdk';
 
 // Initialize SDK
 const asaas = new AsaasSDK({
@@ -21,7 +21,7 @@ async function main() {
             email: 'joao@example.com',
             cpfCnpj: '12345678901',
             mobilePhone: '11999999999',
-            observations: JSON.stringify({ app: 'watranscript' }),
+            observations: JSON.stringify({ source: 'sdk-example' }),
         });
         console.log('Customer created:', customer.id);
 

@@ -2,7 +2,7 @@
 
 ## 📦 Package Created
 
-Successfully created `@watranscript/asaas-sdk` - a complete TypeScript SDK for Asaas Payment Gateway API v3.
+Successfully created `@eziocm/asaas-sdk` - a complete TypeScript SDK for Asaas Payment Gateway API v3.
 
 ## 📁 Package Structure
 
@@ -70,13 +70,13 @@ packages/asaas-sdk/
 ### Installation
 
 ```bash
-npm install @watranscript/asaas-sdk
+npm install @eziocm/asaas-sdk
 ```
 
 ### Basic Example
 
 ```typescript
-import { AsaasSDK } from '@watranscript/asaas-sdk';
+import { AsaasSDK } from '@eziocm/asaas-sdk';
 
 const asaas = new AsaasSDK({
   apiKey: process.env.ASAAS_API_KEY,
@@ -167,14 +167,14 @@ const qrCode = await asaas.payments.getPixQrCode(payment.id);
 
 ## 🔧 Integration with Main Project
 
-To use the SDK in the main watranscript project:
+To use the SDK in your project:
 
 1. **Update package.json** to include the local package:
 
 ```json
 {
   "dependencies": {
-    "@watranscript/asaas-sdk": "file:./packages/asaas-sdk"
+    "@eziocm/asaas-sdk": "^2.0.0"
   }
 }
 ```
@@ -186,7 +186,7 @@ To use the SDK in the main watranscript project:
 import { AsaasService } from '@/services/asaas.service';
 
 // New way
-import { AsaasSDK } from '@watranscript/asaas-sdk';
+import { AsaasSDK } from '@eziocm/asaas-sdk';
 
 const asaas = new AsaasSDK({
   apiKey: process.env.ASAAS_API_KEY!,
@@ -206,7 +206,7 @@ const asaas = new AsaasSDK({
 ## 🔄 Next Steps
 
 1. ✅ Package created and compiled
-2. ⏭️ Integrate into main watranscript project
+2. ⏭️ Integrate into your project
 3. ⏭️ Replace existing Asaas service calls
 4. ⏭️ Add unit tests
 5. ⏭️ Publish to npm (optional)
