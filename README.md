@@ -1,6 +1,20 @@
 # @eziocm/asaas-sdk
 
-TypeScript SDK for Asaas Payment Gateway API v3
+> TypeScript SDK for Asaas Payment Gateway API v3 - Complete, type-safe, and production-ready
+
+[![npm version](https://img.shields.io/npm/v/@eziocm/asaas-sdk.svg)](https://www.npmjs.com/package/@eziocm/asaas-sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+
+## 🚀 Features
+
+- ✅ **Full TypeScript Support** - Complete type definitions with IntelliSense
+- ✅ **13 API Modules** - Comprehensive coverage of Asaas API v3
+- ✅ **Zero Dependencies** - Lightweight and secure
+- ✅ **Promise-based** - Modern async/await API
+- ✅ **Error Handling** - Detailed error messages and types
+- ✅ **Environment Support** - Sandbox and production modes
+- ✅ **Tree-shakeable** - Import only what you need
 
 ## 📦 Installation
 
@@ -8,14 +22,14 @@ TypeScript SDK for Asaas Payment Gateway API v3
 npm install @eziocm/asaas-sdk
 ```
 
-## 🚀 Quick Start
+## 🎯 Quick Start
 
 ```typescript
-import { AsaasSDK } from '@watranscript/asaas-sdk';
+import { AsaasSDK } from '@eziocm/asaas-sdk';
 
 // Initialize the SDK
 const asaas = new AsaasSDK({
-  apiKey: 'your-api-key',
+  apiKey: process.env.ASAAS_API_KEY!,
   environment: 'sandbox', // or 'production'
 });
 
@@ -33,7 +47,7 @@ const payment = await asaas.payments.create({
   billingType: 'PIX',
   value: 100.00,
   dueDate: '2024-12-31',
-  description: 'Pagamento de teste',
+  description: 'Monthly subscription',
 });
 
 // Get PIX QR Code
@@ -41,18 +55,39 @@ const qrCode = await asaas.payments.getPixQrCode(payment.id);
 console.log('PIX Payload:', qrCode.payload);
 ```
 
-## 📚 Features
+## 📚 API Modules
 
-- ✅ **Full TypeScript support** with comprehensive type definitions
-- ✅ **Modular architecture** - use only what you need
-- ✅ **Promise-based API** with async/await
-- ✅ **Automatic error handling** with detailed error messages
-- ✅ **Environment support** - sandbox and production
-- ✅ **Comprehensive coverage** of Asaas API v3
+### Core Modules
 
-## 🔧 API Clients
+| Module | Description | Methods |
+|--------|-------------|---------|
+| **customers** | Customer management | create, list, get, update, delete, restore |
+| **payments** | Payment processing | create, list, get, update, PIX QR code, boleto |
+| **subscriptions** | Recurring payments | create, list, get, update, delete |
+| **pix** | PIX operations | keys, transactions, QR codes, automatic debit |
+| **webhooks** | Event notifications | create, list, get, update, delete |
 
-### Customers
+### Financial Modules
+
+| Module | Description | Methods |
+|--------|-------------|---------|
+| **installments** | Payment plans | create, list, get, payments, payment book |
+| **transfers** | Bank transfers | create, list, get, cancel (PIX, TED) |
+| **refunds** | Payment reversals | refund payment, refund installment, list |
+| **anticipations** | Cash flow | create, simulate, list, limits |
+| **account** | Account management | info, balance, transactions |
+
+### Advanced Modules
+
+| Module | Description | Methods |
+|--------|-------------|---------|
+| **subaccounts** | Multi-tenant | create, list, get, update, documents |
+| **creditCard** | Card tokenization | tokenize |
+| **notifications** | Settings | update, batch update |
+
+## 💡 Usage Examples
+
+### Customer Management
 
 ```typescript
 // Create customer
@@ -60,82 +95,57 @@ const customer = await asaas.customers.create({
   name: 'João da Silva',
   email: 'joao@example.com',
   cpfCnpj: '12345678901',
+  mobilePhone: '11999999999',
+  address: 'Rua Exemplo',
+  addressNumber: '123',
+  province: 'São Paulo',
+  postalCode: '01234567',
 });
 
-// List customers
+// List customers with filters
 const customers = await asaas.customers.list({
+  email: 'joao@example.com',
   limit: 10,
   offset: 0,
 });
 
-// Get customer
-const customer = await asaas.customers.get('cus_123456');
-
 // Update customer
-const updated = await asaas.customers.update('cus_123456', {
-  name: 'João Silva',
+const updated = await asaas.customers.update(customer.id, {
+  mobilePhone: '11988888888',
 });
-
-// Delete customer
-await asaas.customers.delete('cus_123456');
 ```
 
-### Payments
+### Payment Processing
 
 ```typescript
-// Create payment
-const payment = await asaas.payments.create({
-  customer: 'cus_123456',
+// PIX Payment
+const pixPayment = await asaas.payments.create({
+  customer: customerId,
   billingType: 'PIX',
   value: 100.00,
   dueDate: '2024-12-31',
-  description: 'Monthly subscription',
+  description: 'Product purchase',
 });
 
-// List payments
-const payments = await asaas.payments.list({
-  customer: 'cus_123456',
-  status: 'PENDING',
-});
+const qrCode = await asaas.payments.getPixQrCode(pixPayment.id);
 
-// Get payment
-const payment = await asaas.payments.get('pay_123456');
-
-// Get PIX QR Code
-const qrCode = await asaas.payments.getPixQrCode('pay_123456');
-
-// Get payment status
-const status = await asaas.payments.getStatus('pay_123456');
-
-// Update payment
-const updated = await asaas.payments.update('pay_123456', {
+// Boleto Payment
+const boletoPayment = await asaas.payments.create({
+  customer: customerId,
+  billingType: 'BOLETO',
   value: 150.00,
+  dueDate: '2024-12-31',
+  description: 'Service payment',
 });
 
-// Delete payment
-await asaas.payments.delete('pay_123456');
-```
+const boletoLine = await asaas.payments.getIdentificationField(boletoPayment.id);
 
-### Subscriptions
-
-```typescript
-// Create subscription with PIX
-const subscription = await asaas.subscriptions.create({
-  customer: 'cus_123456',
-  billingType: 'PIX',
-  cycle: 'MONTHLY',
-  value: 99.90,
-  nextDueDate: '2024-12-01',
-  description: 'Premium Plan',
-});
-
-// Create subscription with credit card
-const subscription = await asaas.subscriptions.createWithCard({
-  customer: 'cus_123456',
+// Credit Card Payment
+const cardPayment = await asaas.payments.create({
+  customer: customerId,
   billingType: 'CREDIT_CARD',
-  cycle: 'MONTHLY',
-  value: 99.90,
-  nextDueDate: '2024-12-01',
+  value: 200.00,
+  dueDate: '2024-12-31',
   creditCard: {
     holderName: 'João da Silva',
     number: '4111111111111111',
@@ -151,115 +161,85 @@ const subscription = await asaas.subscriptions.createWithCard({
     addressNumber: '123',
   },
 });
+```
 
-// List subscriptions
-const subscriptions = await asaas.subscriptions.list({
-  customer: 'cus_123456',
-  status: 'ACTIVE',
+### Subscriptions
+
+```typescript
+// Create monthly subscription
+const subscription = await asaas.subscriptions.create({
+  customer: customerId,
+  billingType: 'PIX',
+  cycle: 'MONTHLY',
+  value: 99.90,
+  nextDueDate: '2024-12-01',
+  description: 'Premium Plan',
 });
 
 // Get subscription payments
-const payments = await asaas.subscriptions.getPayments('sub_123456');
+const payments = await asaas.subscriptions.getPayments(subscription.id);
 
 // Update subscription
-const updated = await asaas.subscriptions.update('sub_123456', {
+const updated = await asaas.subscriptions.update(subscription.id, {
   value: 149.90,
 });
-
-// Delete subscription
-await asaas.subscriptions.delete('sub_123456');
 ```
 
-### PIX
+### Transfers
 
 ```typescript
-// Create PIX address key
-const key = await asaas.pix.createAddressKey({
-  type: 'EVP',
+// PIX Transfer
+const transfer = await asaas.transfers.create({
+  value: 100.00,
+  operationType: 'PIX',
+  pixAddressKey: '12345678901',
+  pixAddressKeyType: 'CPF',
+  description: 'Payment to supplier',
 });
 
-// List PIX keys
-const keys = await asaas.pix.listAddressKeys();
-
-// Pay a PIX QR Code
-const transaction = await asaas.pix.createTransaction({
-  qrCode: {
-    payload: '00020126580014br.gov.bcb.pix...',
+// Bank Transfer (TED)
+const tedTransfer = await asaas.transfers.create({
+  value: 500.00,
+  operationType: 'TED',
+  bankAccount: {
+    bank: { code: '001' },
+    accountName: 'João da Silva',
+    ownerName: 'João da Silva',
+    cpfCnpj: '12345678901',
+    agency: '1234',
+    account: '12345',
+    accountDigit: '6',
+    bankAccountType: 'CONTA_CORRENTE',
   },
-  value: 100.00,
-  description: 'Payment description',
-});
-
-// Decode PIX QR Code
-const decoded = await asaas.pix.decodeQrCode('00020126580014br.gov.bcb.pix...');
-
-// List PIX transactions
-const transactions = await asaas.pix.listTransactions({
-  type: 'CREDIT',
-  status: 'DONE',
-});
-
-// Create PIX automatic debit authorization
-const authorization = await asaas.pix.createAuthorization({
-  customer: 'cus_123456',
-  value: 100.00,
-  description: 'Monthly subscription',
-});
-
-// List authorizations
-const authorizations = await asaas.pix.listAuthorizations({
-  customer: 'cus_123456',
-  status: 'ACTIVE',
+  description: 'Supplier payment',
 });
 ```
 
-### Webhooks
+### Account Management
 
 ```typescript
-// Create webhook
-const webhook = await asaas.webhooks.create({
-  name: 'Main Webhook',
-  url: 'https://mysite.com/webhook/asaas',
-  email: 'dev@mysite.com',
-  enabled: true,
-  events: [
-    'PAYMENT_CREATED',
-    'PAYMENT_CONFIRMED',
-    'PAYMENT_RECEIVED',
-    'PAYMENT_OVERDUE',
-  ],
-});
+// Get account info
+const accountInfo = await asaas.account.getInfo();
+console.log('Account:', accountInfo.name);
 
-// List webhooks
-const webhooks = await asaas.webhooks.list();
+// Check balance
+const balance = await asaas.account.getBalance();
+console.log('Balance: R$', balance.balance.toFixed(2));
 
-// Update webhook
-const updated = await asaas.webhooks.update('webhook_123456', {
-  enabled: false,
-});
-
-// Delete webhook
-await asaas.webhooks.delete('webhook_123456');
-
-// Remove backoff penalty
-await asaas.webhooks.removeBackoff('webhook_123456');
-```
-
-## 🔐 Configuration
-
-```typescript
-const asaas = new AsaasSDK({
-  apiKey: 'your-api-key',
-  environment: 'production', // 'production' or 'sandbox'
-  // Or use custom baseUrl
-  baseUrl: 'https://api.asaas.com/v3',
+// Get transactions
+const transactions = await asaas.account.getTransactions({
+  startDate: '2024-01-01',
+  finishDate: '2024-12-31',
+  limit: 50,
 });
 ```
 
-## 🛠️ Error Handling
+## 🔒 Error Handling
+
+The SDK provides detailed error information through the `AsaasApiError` class:
 
 ```typescript
-import { AsaasApiError } from '@watranscript/asaas-sdk';
+import { AsaasApiError } from '@eziocm/asaas-sdk';
 
 try {
   const payment = await asaas.payments.create({
@@ -272,36 +252,231 @@ try {
   if (error instanceof AsaasApiError) {
     console.error('Status Code:', error.statusCode);
     console.error('Errors:', error.asaasError.errors);
+    
+    // Handle specific errors
+    if (error.statusCode === 404) {
+      console.error('Customer not found');
+    } else if (error.statusCode === 400) {
+      console.error('Invalid request data');
+    }
+  } else {
+    console.error('Network or unexpected error:', error);
   }
 }
 ```
 
-## 📖 Type Definitions
+## 🔐 Security Best Practices
 
-All types are fully documented and exported:
+### Environment Variables
+
+Never hardcode your API keys. Use environment variables:
+
+```typescript
+// ✅ Good
+const asaas = new AsaasSDK({
+  apiKey: process.env.ASAAS_API_KEY!,
+  environment: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox',
+});
+
+// ❌ Bad
+const asaas = new AsaasSDK({
+  apiKey: 'your-api-key-here', // Never do this!
+  environment: 'production',
+});
+```
+
+### Input Validation
+
+Always validate user inputs before sending to the API:
+
+```typescript
+import { z } from 'zod';
+
+const paymentSchema = z.object({
+  value: z.number().positive().max(1000000),
+  dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  description: z.string().max(500),
+});
+
+// Validate before creating payment
+const validatedData = paymentSchema.parse(userInput);
+const payment = await asaas.payments.create({
+  customer: customerId,
+  billingType: 'PIX',
+  ...validatedData,
+});
+```
+
+### Credit Card Security
+
+Use tokenization for credit card data:
+
+```typescript
+// Tokenize card first
+const token = await asaas.creditCard.tokenize({
+  customer: customerId,
+  creditCard: cardData,
+  creditCardHolderInfo: holderInfo,
+});
+
+// Use token for payments
+const payment = await asaas.payments.create({
+  customer: customerId,
+  billingType: 'CREDIT_CARD',
+  value: 100.00,
+  dueDate: '2024-12-31',
+  creditCardToken: token.creditCardToken,
+});
+```
+
+## 📖 TypeScript Support
+
+The SDK is built with TypeScript and provides full type definitions:
 
 ```typescript
 import type {
   Customer,
   Payment,
   Subscription,
-  PixTransaction,
-  Webhook,
-  BillingType,
   PaymentStatus,
-  SubscriptionStatus,
-} from '@watranscript/asaas-sdk';
+  BillingType,
+} from '@eziocm/asaas-sdk';
+
+// Type-safe payment creation
+const payment: Payment = await asaas.payments.create({
+  customer: 'cus_123',
+  billingType: 'PIX' as BillingType,
+  value: 100.00,
+  dueDate: '2024-12-31',
+});
+
+// Type inference
+const status: PaymentStatus = payment.status; // 'PENDING' | 'CONFIRMED' | etc.
+```
+
+## 🧪 Testing
+
+### Unit Testing
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+import { AsaasSDK } from '@eziocm/asaas-sdk';
+
+describe('Payment Creation', () => {
+  it('should create a PIX payment', async () => {
+    const asaas = new AsaasSDK({
+      apiKey: 'test-key',
+      environment: 'sandbox',
+    });
+
+    const payment = await asaas.payments.create({
+      customer: 'cus_test',
+      billingType: 'PIX',
+      value: 100.00,
+      dueDate: '2024-12-31',
+    });
+
+    expect(payment.billingType).toBe('PIX');
+    expect(payment.value).toBe(100.00);
+  });
+});
+```
+
+## 🌍 Environment Configuration
+
+### Sandbox (Testing)
+
+```typescript
+const asaas = new AsaasSDK({
+  apiKey: process.env.ASAAS_SANDBOX_API_KEY!,
+  environment: 'sandbox',
+});
+```
+
+### Production
+
+```typescript
+const asaas = new AsaasSDK({
+  apiKey: process.env.ASAAS_PRODUCTION_API_KEY!,
+  environment: 'production',
+});
+```
+
+### Custom Base URL
+
+```typescript
+const asaas = new AsaasSDK({
+  apiKey: process.env.ASAAS_API_KEY!,
+  baseUrl: 'https://custom-api.asaas.com/v3',
+});
+```
+
+## 📊 Performance Tips
+
+### Parallel Requests
+
+Use `Promise.all` for independent operations:
+
+```typescript
+// ✅ Good - Parallel execution
+const [customer, balance, transactions] = await Promise.all([
+  asaas.customers.get(customerId),
+  asaas.account.getBalance(),
+  asaas.account.getTransactions({ limit: 10 }),
+]);
+
+// ❌ Slow - Sequential execution
+const customer = await asaas.customers.get(customerId);
+const balance = await asaas.account.getBalance();
+const transactions = await asaas.account.getTransactions({ limit: 10 });
+```
+
+### Pagination
+
+Handle large datasets efficiently:
+
+```typescript
+async function getAllCustomers() {
+  const allCustomers = [];
+  let offset = 0;
+  const limit = 100;
+  
+  while (true) {
+    const response = await asaas.customers.list({ offset, limit });
+    allCustomers.push(...response.data);
+    
+    if (!response.hasMore) break;
+    offset += limit;
+  }
+  
+  return allCustomers;
+}
 ```
 
 ## 🔗 Links
 
 - [Asaas Official Documentation](https://docs.asaas.com/reference)
-- [API Endpoints Map](../docs/asaas-api-endpoints-map.md)
+- [GitHub Repository](https://github.com/eziocm/asaas-sdk)
+- [NPM Package](https://www.npmjs.com/package/@eziocm/asaas-sdk)
+- [Issue Tracker](https://github.com/eziocm/asaas-sdk/issues)
 
-## 📝 License
+## 📄 License
 
-MIT
+MIT © [Ezio Caetano Morais](https://github.com/eziocm)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## 📝 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
+## ⚠️ Support
+
+- **Issues**: [GitHub Issues](https://github.com/eziocm/asaas-sdk/issues)
+- **Email**: <eziocm@gmail.com>
+
+---
+
+Made with ❤️ by [Ezio Caetano Morais](https://github.com/eziocm)
