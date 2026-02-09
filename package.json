@@ -1,0 +1,48 @@
+{
+    "name": "@eziocm/asaas-sdk",
+    "version": "2.0.0",
+    "description": "TypeScript SDK for Asaas Payment Gateway API v3",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "asaas",
+        "payment",
+        "gateway",
+        "sdk",
+        "typescript",
+        "pix",
+        "boleto",
+        "credit-card",
+        "brazil",
+        "payments",
+        "api",
+        "finance"
+    ],
+    "author": "Ezio Caetano Morais <eziocm@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eziocm/asaas-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/eziocm/asaas-sdk/issues"
+    },
+    "homepage": "https://github.com/eziocm/asaas-sdk#readme",
+    "files": [
+        "dist",
+        "README.md",
+        "PACKAGE_SUMMARY.md"
+    ],
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    }
+}
