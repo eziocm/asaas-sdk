@@ -65,6 +65,17 @@ export interface AsaasError {
     }>;
 }
 
+export type PaymentLinkChargeType = 'DETACHED' | 'INSTALLMENT' | 'RECURRENT';
+
+export type InvoiceStatus =
+    | 'SCHEDULED'
+    | 'SYNCHRONIZED'
+    | 'AUTHORIZED'
+    | 'PROCESSING_CANCELLATION'
+    | 'CANCELED'
+    | 'CANCELLATION_DENIED'
+    | 'ERROR';
+
 export interface AsaasConfig {
     apiKey: string;
     environment?: 'production' | 'sandbox';

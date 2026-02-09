@@ -14,3 +14,7 @@ export * from './refund';
 export * from './anticipation';
 export * from './account';
 export * from './subaccount';
+export * from './payment-link';
+export * from './invoice';
+export * from './checkout';
+export * from './split';

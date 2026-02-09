@@ -16,6 +16,10 @@ import { AccountClient } from './clients/account.client';
 import { SubaccountClient } from './clients/subaccount.client';
 import { CreditCardClient } from './clients/creditcard.client';
 import { NotificationClient } from './clients/notification.client';
+import { PaymentLinkClient } from './clients/payment-link.client';
+import { InvoiceClient } from './clients/invoice.client';
+import { CheckoutClient } from './clients/checkout.client';
+import { SplitClient } from './clients/split.client';
 import { AsaasConfig } from './types';
 
 export class AsaasSDK {
@@ -34,6 +38,10 @@ export class AsaasSDK {
     public readonly subaccounts: SubaccountClient;
     public readonly creditCard: CreditCardClient;
     public readonly notifications: NotificationClient;
+    public readonly paymentLinks: PaymentLinkClient;
+    public readonly invoices: InvoiceClient;
+    public readonly checkout: CheckoutClient;
+    public readonly splits: SplitClient;
 
     constructor(config: AsaasConfig) {
         this.http = new AsaasHttpClient(config);
@@ -52,6 +60,10 @@ export class AsaasSDK {
         this.subaccounts = new SubaccountClient(this.http);
         this.creditCard = new CreditCardClient(this.http);
         this.notifications = new NotificationClient(this.http);
+        this.paymentLinks = new PaymentLinkClient(this.http);
+        this.invoices = new InvoiceClient(this.http);
+        this.checkout = new CheckoutClient(this.http);
+        this.splits = new SplitClient(this.http);
     }
 
     /**
@@ -78,3 +90,7 @@ export { AccountClient } from './clients/account.client';
 export { SubaccountClient } from './clients/subaccount.client';
 export { CreditCardClient } from './clients/creditcard.client';
 export { NotificationClient } from './clients/notification.client';
+export { PaymentLinkClient } from './clients/payment-link.client';
+export { InvoiceClient } from './clients/invoice.client';
+export { CheckoutClient } from './clients/checkout.client';
+export { SplitClient } from './clients/split.client';
