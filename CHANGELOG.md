@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.1] - 2026-02-08
+## [2.1.0] - 2026-02-08
+
+### Added
+
+#### New Modules (4)
+
+- **Payment Links** - Create and manage payment links
+- **Checkout** - Customize and manage checkout experiences
+- **Invoices** - Full invoice management support
+- **Splits** - Complex payment splitting capabilities
 
 ### Fixed
 
@@ -102,68 +111,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **2.1.0** - Added Payment Links, Checkout, Invoice, and Split modules
 - **2.0.0** - Major feature release with 8 new modules
 - **1.0.0** - Initial release with core functionality
 
 ## Upgrade Guide
 
-### From 1.x to 2.x
-
-#### Breaking Changes
-
-- Package name changed to `@eziocm/asaas-sdk`
-
-#### Migration Steps
-
-1. **Update package.json**
-
-   ```bash
-   npm uninstall @watranscript/asaas-sdk
-   npm install @eziocm/asaas-sdk
-   ```
-
-2. **Update imports**
-
-   ```typescript
-   // Before
-   import { AsaasSDK } from '@watranscript/asaas-sdk';
-   
-   // After
-   import { AsaasSDK } from '@eziocm/asaas-sdk';
-   ```
-
-3. **No code changes required** - All existing functionality remains compatible
+### From 2.0.x to 2.1.x
 
 #### New Features Available
 
-After upgrading, you can use new modules:
+You can now use these new modules:
 
 ```typescript
-import { AsaasSDK } from '@eziocm/asaas-sdk';
+// Payment Links
+await asaas.paymentLinks.create({...});
 
-const asaas = new AsaasSDK({ apiKey, environment: 'sandbox' });
+// Invoices
+await asaas.invoices.create({...});
 
-// New in 2.0.0
-await asaas.installments.create({...});
-await asaas.transfers.create({...});
-await asaas.refunds.refundPayment(paymentId);
-await asaas.anticipations.simulate({...});
-await asaas.account.getBalance();
-await asaas.subaccounts.create({...});
-await asaas.creditCard.tokenize({...});
-await asaas.notifications.update(id, {...});
+// Checkout Customization
+await asaas.checkout.create({...});
+
+// Splits (Wallet)
+await asaas.splits.create({...});
 ```
 
 ---
 
 ## Future Roadmap
-
-### Planned for 2.1.0
-
-- Payment Links module
-- Checkout module
-- Invoice management
-- Split payments
 
 ### Planned for 2.2.0
 

@@ -76,6 +76,10 @@ console.log('PIX Payload:', qrCode.payload);
 | **refunds** | Payment reversals | refund payment, refund installment, list |
 | **anticipations** | Cash flow | create, simulate, list, limits |
 | **account** | Account management | info, balance, transactions |
+| **paymentLinks** | Payment link mgmt | create, list, get, update, delete |
+| **invoices** | Invoice management | create, list, get, update, cancel |
+| **checkout** | Checkout config | customization, settings |
+| **splits** | Payment distribution | create, list, get |
 
 ### Advanced Modules
 
